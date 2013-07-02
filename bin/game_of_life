@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require 'curses'
+
+WIDTH = 80
+BANNER = '-' * WIDTH
+
+def init_screen
+  Curses.noecho # do not show typed keys
+  Curses.curs_set(0) # do not show cursor
+  Curses.init_screen
+  begin
+    yield
+  ensure
+    Curses.close_screen
+  end
+end
+
+def write(line, column, text)
+  Curses.setpos(line, column)
+  Curses.addstr(text);
+end
+
+init_screen do
+  write(0, 0, BANNER)
+  write(1, 0, "Conway's Game Of Life")
+  write(2, 0, BANNER)
+  (3..41).each do |line|
+    write(line, 0, 'x' * WIDTH)
+  end
+  write(42, 0, BANNER)
+  write(43, 0, "Hit q to Quit")
+  write(44, 0, BANNER)
+
+  loop do
+    case Curses.getch
+    when ?q then break
+    end
+  end
+end
