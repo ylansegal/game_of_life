@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
+
 require 'curses'
+require 'game_of_life'
 
 WIDTH = 80
 BANNER = '-' * WIDTH
@@ -23,7 +27,7 @@ end
 
 init_screen do
   write(0, 0, BANNER)
-  write(1, 0, "Conway's Game Of Life")
+  write(1, 0, "Conway's Game Of Life (#{GameOfLife::VERSION})")
   write(2, 0, BANNER)
   (3..41).each do |line|
     write(line, 0, 'x' * WIDTH)
