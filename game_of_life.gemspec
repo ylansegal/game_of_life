@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "game_of_life"
   spec.version       = GameOfLife::VERSION
   spec.authors       = ["Ylan Segal"]
-  spec.email         = ["ylan.segal@mellmo.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.email         = ["ylan@segal-family.com"]
+  spec.description   = %q{Conway's Game of Life Simulation}
+  spec.summary       = %q{My take on the game of life, according to the rules posted on: http://en.wikipedia.org/wiki/Conway's_Game_of_Life}
   spec.homepage      = ""
   spec.license       = "MIT"
 
