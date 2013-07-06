@@ -30,7 +30,7 @@ init_screen do
   write(1, 0, "Conway's Game Of Life (#{GameOfLife::VERSION})")
   write(2, 0, BANNER)
   (3..41).each do |line|
-    write(line, 0, 'x' * WIDTH)
+    write(line, 0, '*' * WIDTH)
   end
   write(42, 0, BANNER)
   write(43, 0, "Hit q to Quit")
