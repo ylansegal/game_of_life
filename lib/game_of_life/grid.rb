@@ -16,5 +16,11 @@ module GameOfLife
 
       result
     end
+
+    def to_s
+      row_vectors.inject('') { |result, row|
+        result << row.to_a.join('') << "\n"
+      }
+    end
   end
 end
