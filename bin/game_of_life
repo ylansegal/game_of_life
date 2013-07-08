@@ -5,6 +5,7 @@ $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
 require 'curses'
 require 'game_of_life'
+include ::GameOfLife
 
 HEIGHT = 40
 WIDTH = 80
@@ -31,7 +32,7 @@ init_screen do
   write(1, 0, "Conway's Game Of Life (#{GameOfLife::VERSION})")
   write(2, 0, BANNER)
 
-  write(3,0, GameOfLife::Grid.build(HEIGHT, WIDTH) { [' ', '*'].sample }.to_s )
+  write(3,0, GameOfLife::Grid.build(HEIGHT, WIDTH) { [DeadCell.new, LiveCell.new ].sample }.to_s )
 
   write(42, 0, BANNER)
   write(43, 0, "Hit q to Quit")
