@@ -7,9 +7,10 @@ require 'curses'
 require 'game_of_life'
 include ::GameOfLife
 
-HEIGHT = 40
-WIDTH = 40
-BANNER = '-' * WIDTH
+@height = 40
+@width = 40
+@banner = '-' * @width
+@headline = "Conway's Game Of Life (#{GameOfLife::VERSION}) #{@width} X #{@height}"
 
 def init_screen
   Curses.noecho # do not show typed keys
@@ -28,29 +29,34 @@ def write(line, column, text)
 end
 
 def draw_screen(grid)
-  write(0, 0, BANNER)
-  write(1, 0, "Conway's Game Of Life (#{GameOfLife::VERSION})")
-  write(2, 0, BANNER)
+  write(0, 0, @banner)
+  write(1, 0, @headline)
+  write(2, 0, @banner)
   write(3,0, grid.to_s)
-  write(HEIGHT + 3, 0, BANNER)
-  write(HEIGHT + 4, 0, "Hit q to Quit")
-  write(HEIGHT + 5, 0, BANNER)
+  write(@height + 3, 0, @banner)
+  write(@height + 4, 0, "Hit q to Quit | #{@counter} generations")
+  write(@height + 5, 0, @banner)
+end
+
+def random_grid
+  Grid.build(@height, @width) { [DeadCell.new, LiveCell.new ].sample }
 end
 
 init_screen do
-  write(0, 0, BANNER)
-  write(1, 0, "Conway's Game Of Life (#{GameOfLife::VERSION})")
-  write(2, 0, BANNER)
+  write(0, 0, @banner)
+  write(1, 0, @headline)
+  write(2, 0, @banner)
   write(3, 0, " PRESS ANY KEY TO BEGIN")
 
-  grid = GameOfLife::Grid.build(HEIGHT, WIDTH) { [DeadCell.new, LiveCell.new ].sample }
+  @counter = 0
 
   loop do
     case Curses.getch
     when ?q then break
     else
-      grid = GameOfLife::Simulation.new.next_grid_generation(grid)
-      draw_screen(grid)
+      @counter += 1
+      @grid = @grid ? Simulation.new.next_grid_generation(@grid) : random_grid
+      draw_screen(@grid)
     end
   end
 end
