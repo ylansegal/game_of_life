@@ -22,7 +22,7 @@ module GameOfLife
     end
 
     def next_grid_generation(grid)
-      Matrix.build(grid.row_size, grid.column_size) { |row, column|
+      Grid.build(grid.row_size, grid.column_size) { |row, column|
         next_cell_generation(grid[row, column], grid.adjacent(row, column))
       }
     end
