@@ -1,6 +1,8 @@
-# GameOfLife
+# Game Of Life
 
-TODO: Write a gem description
+Conway's Game of Life Simulation. 
+
+This is my take on the game of life. Rules according to [Wikipedia][1]
 
 ## Installation
 
@@ -18,12 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Play, be running:
 
-## Contributing
+$ game_of_life 
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+[1]: http://en.wikipedia.org/wiki/Conway's_Game_of_Life
