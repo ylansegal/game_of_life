@@ -27,5 +27,26 @@ module GameOfLife
         subject.next_cell_generation(DeadCell.new, [LiveCell.new]*4).should be_a(DeadCell)
       end
     end
+
+    context "next_grid_generation" do
+      let(:grid) {
+        Grid[
+              [1, 2, 3],
+              [8, 9, 4],
+              [7, 6, 5]
+            ]
+      }
+
+      it 'returns a new grid of same size' do
+        new_grid = subject.next_grid_generation(grid)
+        new_grid.row_size.should == grid.row_size
+        new_grid.column_size.should == grid.column_size
+      end
+
+      it 'evaluates each cell individually' do
+        subject.should_receive(:next_cell_generation).exactly(grid.row_size * grid.column_size).times
+        subject.next_grid_generation(grid)
+      end
+    end
   end
 end
