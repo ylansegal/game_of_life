@@ -5,58 +5,64 @@ $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
 require 'curses'
 require 'game_of_life'
-include ::GameOfLife
 
-@height = 40
-@width = 40
-@banner = '-' * @width
-@headline = "Conway's Game Of Life (#{GameOfLife::VERSION}) #{@width} X #{@height}"
+module GameOfLife
+  class Screen
 
-def init_screen
-  Curses.noecho # do not show typed keys
-  Curses.curs_set(0) # do not show cursor
-  Curses.init_screen
-  begin
-    yield
-  ensure
-    Curses.close_screen
-  end
-end
+    attr_accessor :height, :width, :grid, :banner, :headline, :counter
 
-def write(line, column, text)
-  Curses.setpos(line, column)
-  Curses.addstr(text);
-end
+    def initialize(height, width)
+      self.height, self.width = height, width
+      self.grid = Grid.build(height, width) { [DeadCell.new, LiveCell.new].sample }
+      self.banner = '-' * width
+      self.headline = "Conway's Game Of Life (#{GameOfLife::VERSION}) #{width} X #{height}"
+      self.counter = 0
+    end
 
-def draw_screen(grid)
-  write(0, 0, @banner)
-  write(1, 0, @headline)
-  write(2, 0, @banner)
-  write(3,0, grid.to_s)
-  write(@height + 3, 0, @banner)
-  write(@height + 4, 0, "Hit q to Quit | #{@counter} generations")
-  write(@height + 5, 0, @banner)
-end
+    def run
+      curses_setup do
+        draw_screen("Press any key to advance simulation")
 
-def random_grid
-  Grid.build(@height, @width) { [DeadCell.new, LiveCell.new ].sample }
-end
+        loop do
+          case Curses.getch
+          when ?q then break
+          else
+            self.counter += 1
+            draw_screen(self.grid.to_s)
+            self.grid = Simulation.new.next_grid_generation(self.grid)
+          end
+        end
+      end
+    end
 
-init_screen do
-  write(0, 0, @banner)
-  write(1, 0, @headline)
-  write(2, 0, @banner)
-  write(3, 0, " PRESS ANY KEY TO BEGIN")
+    private
 
-  @counter = 0
+    def curses_setup
+      Curses.noecho # do not show typed keys
+      Curses.curs_set(0) # do not show cursor
+      Curses.init_screen
+      begin
+        yield
+      ensure
+        Curses.close_screen
+      end
+    end
 
-  loop do
-    case Curses.getch
-    when ?q then break
-    else
-      @counter += 1
-      @grid = @grid ? Simulation.new.next_grid_generation(@grid) : random_grid
-      draw_screen(@grid)
+    def write(line, column, text)
+      Curses.setpos(line, column)
+      Curses.addstr(text);
+    end
+
+    def draw_screen(string)
+      write(0, 0, banner)
+      write(1, 0, headline)
+      write(2, 0, banner)
+      write(3,0, string)
+      write(height + 3, 0, banner)
+      write(height + 4, 0, "Hit q to Quit | #{counter} generations")
+      write(height + 5, 0, banner)
     end
   end
 end
+
+GameOfLife::Screen.new(40, 40).run
