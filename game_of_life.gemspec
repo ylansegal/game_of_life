@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ylan@segal-family.com"]
   spec.description   = %q{Conway's Game of Life Simulation}
   spec.summary       = %q{My take on the game of life, according to the rules posted on: http://en.wikipedia.org/wiki/Conway's_Game_of_Life}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/ylansegal/game_of_life"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
