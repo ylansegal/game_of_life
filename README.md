@@ -14,6 +14,6 @@ Install by using rubygems:
 
 Play by running.
 
-$ game_of_life 
+    $ game_of_life 
 
 [1]: http://en.wikipedia.org/wiki/Conway's_Game_of_Life
