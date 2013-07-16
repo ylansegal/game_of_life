@@ -6,14 +6,11 @@ This is my take on the game of life. Rules according to [Wikipedia][1]. Tested o
 
 ## Installation
 
-Install by using rubygems:
-
-    $ gem install game_of_life
+    $ git clone https://github.com/ylansegal/game_of_life
 
 ## Usage
 
-Play by running.
-
-    $ game_of_life 
-
+    $ cd game_of_life
+    $ bin/game_of_life
+    
 [1]: http://en.wikipedia.org/wiki/Conway's_Game_of_Life
