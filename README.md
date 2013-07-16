@@ -2,25 +2,17 @@
 
 Conway's Game of Life Simulation. 
 
-This is my take on the game of life. Rules according to [Wikipedia][1]
+This is my take on the game of life. Rules according to [Wikipedia][1]. Tested on Ruby 2.0
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'game_of_life'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install by using rubygems:
 
     $ gem install game_of_life
 
 ## Usage
 
-Play, be running:
+Play by running.
 
 $ game_of_life 
 
