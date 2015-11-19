@@ -1,7 +1,7 @@
 module GameOfLife
   class Simulation
     def next_cell_generation(cell, neighbours)
-      live_count = neighbours.select { |item| item.is_a?(LiveCell) }.count
+      live_count = neighbours.count { |item| item.is_a?(LiveCell) }
 
       case cell
       when LiveCell

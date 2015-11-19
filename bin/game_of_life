@@ -1,20 +1,20 @@
 #!/usr/bin/env ruby
 
-lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+lib = File.expand_path(File.dirname(__FILE__) + "/../lib")
 $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
-require 'curses'
-require 'game_of_life'
+require "curses"
+require "game_of_life"
 
 module GameOfLife
   class Screen
-
     attr_accessor :height, :width, :grid, :banner, :headline, :counter
 
     def initialize(height, width)
-      self.height, self.width = height, width
+      self.height = height
+      self.width = width
       self.grid = Grid.build(height, width) { [DeadCell.new, LiveCell.new].sample }
-      self.banner = '-' * width
+      self.banner = "-" * width
       self.headline = "Conway's Game Of Life (#{GameOfLife::VERSION}) #{width} X #{height}"
       self.counter = 0
     end
@@ -25,11 +25,11 @@ module GameOfLife
 
         loop do
           case Curses.getch
-          when ?q then break
+          when "q" then break
           else
             self.counter += 1
-            draw_screen(self.grid.to_s)
-            self.grid = Simulation.new.next_grid_generation(self.grid)
+            draw_screen(grid.to_s)
+            self.grid = Simulation.new.next_grid_generation(grid)
           end
         end
       end
@@ -50,14 +50,14 @@ module GameOfLife
 
     def write(line, column, text)
       Curses.setpos(line, column)
-      Curses.addstr(text);
+      Curses.addstr(text)
     end
 
     def draw_screen(string)
       write(0, 0, banner)
       write(1, 0, headline)
       write(2, 0, banner)
-      write(3,0, string)
+      write(3, 0, string)
       write(height + 3, 0, banner)
       write(height + 4, 0, "Hit q to Quit | #{counter} generations")
       write(height + 5, 0, banner)
